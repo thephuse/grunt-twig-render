@@ -44,7 +44,7 @@
     "twig"
   ],
   "dependencies": {
-    "twig": "~0.7.2",
+    "twig": "~0.8.2",
     "chalk": "~0.5.1",
     "merge": "^1.1.3"
   }
