@@ -10,6 +10,7 @@
 
 var chalk = require( 'chalk' );
 var merge = require( 'merge' );
+var path = require( 'path' );
 
 // http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type
 function isFunction(functionToCheck) {
@@ -94,7 +95,7 @@ module.exports = function(grunt) {
             }
           }
         }
-        for (i = 0, len = pathArray.length; i < len; i++) { 
+        for (i = 0, len = pathArray.length; i < len; i++) {
           var tt = Twig.twig({path: template, async: false});
           // compute destination path by inserting '_n'
           var destPath = dest.replace(/(.*)(\.[^\.]+)$/, replacer);
@@ -102,6 +103,7 @@ module.exports = function(grunt) {
           grunt.file.write(destPath, tt.render(actualData));
         }
         actualData.dataPath = pathArray;
+        return console.log(actualData.dataPath);
       } else {
         var twigTemplate = Twig.twig({
           path: template,
@@ -124,7 +126,7 @@ module.exports = function(grunt) {
     var rawData = null;
     if (!rawData && datatype === "string") {
       rawData = this._getDataFromFile(data);
-    } 
+    }
     if (!rawData && Array.isArray(data)) {
       var mergedData = {};
       data.forEach(function(item) {
@@ -188,6 +190,7 @@ module.exports = function(grunt) {
         // MUST be specified.
         var src = fileData.src;
         if (src && isArray(src)) {src = src[0];}
+        if(src) {src = path.normalize(src);}
         if(src && !fileData.template) {fileData.template = src;}
         if(src && !fileData.data) {fileData.data = src;}
 
